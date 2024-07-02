@@ -4,12 +4,20 @@ export const computeFibonacciNumber = (position: number | null): number => {
         notNullPosition = 1;   
     }
 
-    let i = 1;
-    let j = 1;
+    if (notNullPosition === 0) {
+        return 0;
+    }
+    if (notNullPosition < 0) {
+        return computeNegativeFibonacci(notNullPosition);
+    }
+
 
     if (notNullPosition <= 2) {
         return 1;
     }
+
+    let i = 1;
+    let j = 1;
 
     let currentPosition = 2;
     while (currentPosition < notNullPosition) {
@@ -21,7 +29,18 @@ export const computeFibonacciNumber = (position: number | null): number => {
     return j;
 };
 
+
 export const computeFibonacciArray = (start: number, endInclusive: number): number[] => {
     const inputArray = [...Array(endInclusive - start + 1).keys()].map(i => i + start);
     return inputArray.map(x => computeFibonacciNumber(x));
+}
+
+const computeNegativeFibonacci = (position: number): number => {
+    if (position >= 0) {
+        throw new Error(`Position must be less than zero! Received: ${position}.`);
+    }
+    const resultIsNegative = position % 2 === 0;
+    const absoluteResult = computeFibonacciNumber(-position);
+    return resultIsNegative ? absoluteResult * -1 : absoluteResult;
+
 }
